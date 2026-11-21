@@ -37,9 +37,7 @@ public static class DocumentEndpoints
             using var reader = new StreamReader(stream);
             var content = await reader.ReadToEndAsync(cancellationToken);
             var document = await documentService.UploadAsync(
-                new UploadDocumentCommand(
-                    Path.GetFileName(file.FileName.Replace('\\', '/')),
-                    content),
+                new UploadDocumentCommand(content),
                 cancellationToken);
 
             return Results.Created($"/documents/{document.Id}", document);

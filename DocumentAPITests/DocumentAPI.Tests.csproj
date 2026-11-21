@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\src\Application\DocumentAPI.Application.csproj" />
     <ProjectReference Include="..\src\Infrastructure\DocumentAPI.Infrastructure.csproj" />
   </ItemGroup>
 

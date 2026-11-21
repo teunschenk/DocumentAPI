@@ -10,6 +10,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<IDocumentRepository, InMemoryDocumentRepository>();
 builder.Services.AddSingleton<TimeProvider>(TimeProvider.System);
 builder.Services.AddScoped<ApproveDocumentHandler>();
+builder.Services.AddScoped<ValidateDocumentHandler>();
 builder.Services.AddScoped<GetDocumentByIdQueryHandler>();
 builder.Services.AddScoped<DocumentService>();
 

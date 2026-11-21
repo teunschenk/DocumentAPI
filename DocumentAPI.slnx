@@ -14,4 +14,7 @@
   <Folder Name="/src/Presentation/">
     <Project Path="src/Presentation/DocumentAPI.Presentation.csproj" />
   </Folder>
+  <Folder Name="/src/Tests/">
+    <Project Path="DocumentAPITests/DocumentAPI.Tests.csproj" Id="025789d8-a52d-488d-9585-6b906f7c309f" />
+  </Folder>
 </Solution>

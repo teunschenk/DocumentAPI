@@ -2,6 +2,7 @@
   "profiles": {
     "http": {
       "commandName": "Project",
+      "launchUrl": "swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -10,6 +11,7 @@
     },
     "https": {
       "commandName": "Project",
+      "launchUrl": "swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -18,7 +20,7 @@
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080"
@@ -28,7 +30,7 @@
     },
     "WSL": {
       "commandName": "WSL2",
-      "launchUrl": "https://localhost:7004",
+      "launchUrl": "https://localhost:7004/swagger/index.html",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_URLS": "https://localhost:7004;http://localhost:5075"

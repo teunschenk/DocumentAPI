@@ -1,3 +1,7 @@
+using DocumentAPI.Application.Commands;
+using DocumentAPI.Application.Handlers;
+using DocumentAPI.Application.Models;
+using DocumentAPI.Application.Queries;
 using DocumentAPI.Domain.Documents;
 
 namespace DocumentAPI.Application.Documents;
@@ -5,45 +9,35 @@ namespace DocumentAPI.Application.Documents;
 public sealed class DocumentService
 {
     private readonly IDocumentRepository _documentRepository;
+    private readonly ApproveDocumentHandler _handler;
+    private readonly GetDocumentByIdQueryHandler _getDocumentByIdQueryHandler;
 
-    public DocumentService(IDocumentRepository documentRepository)
+    public DocumentService(
+        IDocumentRepository documentRepository,
+        ApproveDocumentHandler handler,
+        GetDocumentByIdQueryHandler getDocumentByIdQueryHandler)
     {
         _documentRepository = documentRepository;
+        _handler = handler;
+        _getDocumentByIdQueryHandler = getDocumentByIdQueryHandler;
     }
 
     public async Task<DocumentDto> UploadAsync(UploadDocumentCommand command, CancellationToken cancellationToken)
     {
-        var document = Document.Create(command.Title, command.Content);
+        var document = Document.Create(command.Content);
         await _documentRepository.AddAsync(document, cancellationToken);
-        return Map(document);
+
+        var approved = await _handler.HandleAsync(
+            new ApproveDocumentCommand(document.Id),
+            cancellationToken);
+        
+        return await GetByIdAsync(document.Id, cancellationToken);
     }
 
     public async Task<DocumentDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var document = await _documentRepository.GetByIdAsync(id, cancellationToken);
-        return document is null ? null : Map(document);
-    }
-
-    public async Task<DocumentDto?> MutateAsync(Guid id, MutateDocumentCommand command, CancellationToken cancellationToken)
-    {
-        var document = await _documentRepository.GetByIdAsync(id, cancellationToken);
-        if (document is null)
-        {
-            return null;
-        }
-
-        document.Mutate(command.Content, command.Title);
-        await _documentRepository.SaveAsync(document, cancellationToken);
-        return Map(document);
-    }
-
-    private static DocumentDto Map(Document document)
-    {
-        return new DocumentDto(
-            document.Id,
-            document.Title,
-            document.Content,
-            document.CreatedAtUtc,
-            document.UpdatedAtUtc);
-    }
+        return await _getDocumentByIdQueryHandler.HandleAsync(
+            new GetDocumentByIdQuery(id),
+            cancellationToken);
+    }    
 }

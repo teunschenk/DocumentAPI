@@ -5,28 +5,27 @@ using FluentAssertions;
 
 namespace DocumentAPI.Tests.Unittests;
 
-public class DocumentApprovalTests
+public class DocumentMutationTests
 {
     [Fact]
-    public async Task HandleAsync_WithExistingDocument_ShouldApproveAndSaveDocument()
+    public async Task HandleAsync_WithExistingDocument_ShouldMutateAndSaveDocument()
     {
         // Arrange
         var document = Document.Create("Original content.");
         var repository = new TestDocumentRepository(document);
         var approvalTime = new DateTimeOffset(2025, 1, 2, 3, 4, 5, TimeSpan.Zero);
-        var handler = new ApproveDocumentHandler(repository, new FixedTimeProvider(approvalTime));
+        var handler = new MutateDocumentHandler(repository, new FixedTimeProvider(approvalTime));
 
         // Act
         var result = await handler.HandleAsync(
-            new ApproveDocumentCommand(document.Id),
+            new MutateDocumentCommand(document.Id),
             CancellationToken.None);
 
         // Assert
         result.Should().BeTrue();
         document.Content.Should().Contain("Original content.");
         document.Content.Should().Contain($"DateTime: {approvalTime:O}");
-        document.Content.Should().Contain($"Checked by: {Environment.UserName}");
-        document.Content.Should().Contain("Status: Approved");
+        document.Content.Should().Contain("Random Data");
         repository.SavedDocument.Should().BeSameAs(document);
         repository.SaveCount.Should().Be(1);
     }
@@ -36,11 +35,11 @@ public class DocumentApprovalTests
     {
         // Arrange
         var repository = new TestDocumentRepository();
-        var handler = new ApproveDocumentHandler(repository, new FixedTimeProvider(DateTimeOffset.UtcNow));
+        var handler = new MutateDocumentHandler(repository, new FixedTimeProvider(DateTimeOffset.UtcNow));
 
         // Act  
         var result = await handler.HandleAsync(
-            new ApproveDocumentCommand(Guid.NewGuid()),
+            new MutateDocumentCommand(Guid.NewGuid()),
             CancellationToken.None);
 
         // Assert

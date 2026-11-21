@@ -1,3 +1,3 @@
 namespace DocumentAPI.Application.Documents;
 
-public sealed record ApproveDocumentCommand(Guid DocumentId);
+public sealed record MutateDocumentCommand(Guid DocumentId);

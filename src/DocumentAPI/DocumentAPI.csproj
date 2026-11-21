@@ -19,7 +19,7 @@
     <ProjectReference Include="../Application/DocumentAPI.Application.csproj" />
     <ProjectReference Include="../Domain/DocumentAPI.Domain.csproj" />
     <ProjectReference Include="../Infrastructure/DocumentAPI.Infrastructure.csproj" />
-    <ProjectReference Include="../Presentation/DocumentAPI.Presentation.csproj" />
+    <ProjectReference Include="..\Presentation\DocumentAPI.RestAPI.csproj" />
   </ItemGroup>
 
 </Project>

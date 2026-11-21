@@ -9,12 +9,12 @@ namespace DocumentAPI.Application.Documents;
 public sealed class DocumentService
 {
     private readonly IDocumentRepository _documentRepository;
-    private readonly ApproveDocumentHandler _handler;
+    private readonly MutateDocumentHandler _handler;
     private readonly GetDocumentByIdQueryHandler _getDocumentByIdQueryHandler;
     private readonly ValidateDocumentHandler _validateDocumentHandler;
 
     /// <summary>
-    /// Validates, approves and stores a document
+    /// Validates, Mutates and stores a document
     /// </summary>
     /// <param name="documentRepository"></param>
     /// <param name="handler"></param>
@@ -22,7 +22,7 @@ public sealed class DocumentService
     /// <param name="validateDocumentHandler"></param>
     public DocumentService(
         IDocumentRepository documentRepository,
-        ApproveDocumentHandler handler,
+        MutateDocumentHandler handler,
         GetDocumentByIdQueryHandler getDocumentByIdQueryHandler,
         ValidateDocumentHandler validateDocumentHandler)
     {
@@ -49,9 +49,9 @@ public sealed class DocumentService
         // Store the document in the repository
         await _documentRepository.AddAsync(document, cancellationToken);
 
-        // Approve the document
-        var approved = await _handler.HandleAsync(
-            new ApproveDocumentCommand(document.Id),
+        // Mutate the document
+        var Mutated = await _handler.HandleAsync(
+            new MutateDocumentCommand(document.Id),
             cancellationToken);
 
         // Retrieve the document with approval by its ID and return it

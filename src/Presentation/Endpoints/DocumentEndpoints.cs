@@ -23,7 +23,12 @@ public static class DocumentEndpoints
         CancellationToken cancellationToken)
     {
          var document = await documentService.GetByIdAsync(id, cancellationToken);
-         return document is null ? Results.NotFound() : Results.Ok(document);        
+         return document is null
+             ? Results.NotFound()
+             : Results.File(
+                 System.Text.Encoding.UTF8.GetBytes(document.Content),
+                 "text/plain; charset=utf-8",
+                 $"{document.Id}.txt");
     }
 
     private static async Task<IResult> UploadAsync(

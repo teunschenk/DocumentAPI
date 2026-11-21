@@ -8,12 +8,12 @@ namespace DocumentAPI.Application.Handlers;
 /// </summary>
 /// <param name="documentRepository"></param>
 /// <param name="timeProvider"></param>
-public sealed class ApproveDocumentHandler(
+public sealed class MutateDocumentHandler(
     IDocumentRepository documentRepository,
     TimeProvider timeProvider)
 {
     public async Task<bool> HandleAsync(
-        ApproveDocumentCommand command,
+        MutateDocumentCommand command,
         CancellationToken cancellationToken)
     {
         var document = await documentRepository.GetByIdAsync(command.DocumentId, cancellationToken);
@@ -22,18 +22,19 @@ public sealed class ApproveDocumentHandler(
             return false;
         }
 
-        // Add approval stamp to the document content at the end of the content
-        document.AddContent(GetApprovalStamp());
+        // Add random data to the document content at the end of the content
+        document.AddContent(GetRandomData());
 
         await documentRepository.SaveAsync(document, cancellationToken);
         return true;
     }
 
-    private string GetApprovalStamp()
+    private string GetRandomData()
     {
-        var stamp = $"DateTime: {timeProvider.GetUtcNow():O}";
-        stamp += $"\n\nChecked by: {Environment.UserName}";
-        stamp += $"\n\nStatus: Approved";
-        return stamp;
+        var randomString = Guid.NewGuid().ToString("N");
+
+        var data = $"\n\nDateTime: {timeProvider.GetUtcNow():O}";
+        data += $"\nRandom Data: {randomString}";
+        return data;
     }
 }

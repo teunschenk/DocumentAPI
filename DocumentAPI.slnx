@@ -12,7 +12,7 @@
     <Project Path="src/Infrastructure/DocumentAPI.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Presentation/">
-    <Project Path="src/Presentation/DocumentAPI.Presentation.csproj" />
+    <Project Path="src/Presentation/DocumentAPI.RestAPI.csproj" />
   </Folder>
   <Folder Name="/src/Tests/">
     <Project Path="DocumentAPITests/DocumentAPI.Tests.csproj" Id="025789d8-a52d-488d-9585-6b906f7c309f" />

@@ -47,7 +47,7 @@ public static class DocumentEndpoints
 
             return Results.Created($"/Document/{document.Id}", document);
         }
-        catch (Exception exception)
+        catch (ArgumentException exception)
         {
             return Results.BadRequest(new { error = exception.Message });
         }

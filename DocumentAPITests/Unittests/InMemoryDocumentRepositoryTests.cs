@@ -32,7 +32,7 @@ namespace DocumentAPI.Tests.Unittests
             // Act & Assert            
             await Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                await repository.AddAsync(null, CancellationToken.None);
+                await repository.AddAsync(null!, CancellationToken.None);
             });
         }
 

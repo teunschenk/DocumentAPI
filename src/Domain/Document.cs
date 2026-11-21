@@ -2,18 +2,15 @@ namespace DocumentAPI.Domain.Documents;
 
 public sealed class Document
 {
-    internal Document(Guid id, string content, DateTimeOffset createdAtUtc)
+    internal Document(Guid id, string content)
     {
         Id = id;
         Content = content;
-        CreatedAtUtc = createdAtUtc;
-        UpdatedAtUtc = createdAtUtc;
     }
 
     public Guid Id { get; }
     public string Content { get; private set; }
     public DateTimeOffset CreatedAtUtc { get; }
-    public DateTimeOffset UpdatedAtUtc { get; private set; }
 
     public static Document Create(string content)
     {
@@ -22,8 +19,7 @@ public sealed class Document
             throw new ArgumentException("Content is required.", nameof(content));
         }
 
-        var now = DateTimeOffset.UtcNow;
-        return new Document(Guid.NewGuid(), content, now);
+        return new Document(Guid.NewGuid(), content);
     }
 
     public void AddContent(string text)

@@ -19,8 +19,6 @@ public sealed class GetDocumentByIdQueryHandler(IDocumentRepository documentRepo
             ? null
             : new DocumentDto(
                 document.Id,
-                document.Content,
-                document.CreatedAtUtc,
-                document.UpdatedAtUtc);
+                document.Content);
     }
 }

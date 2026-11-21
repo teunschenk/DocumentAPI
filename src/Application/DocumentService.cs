@@ -37,9 +37,8 @@ public sealed class DocumentService
         var document = Document.Create(command.Content);
 
         // Validate the document content
-        var isValid = await _validateDocumentHandler.HandleAsync(
-            new ValidateDocumentCommand(document.Content),
-            cancellationToken);
+        var isValid = _validateDocumentHandler.Handle(
+            new ValidateDocumentCommand(document.Content));
 
         if(!isValid)
         {
@@ -55,7 +54,14 @@ public sealed class DocumentService
             cancellationToken);
 
         // Retrieve the document with mutation by its ID and return it
-        return await GetByIdAsync(document.Id, cancellationToken);
+        var result = await GetByIdAsync(document.Id, cancellationToken);
+
+        if(result is null)
+        {
+            throw new InvalidOperationException("Document not found after mutation.");
+        }
+
+        return result;
     }
 
     public async Task<DocumentDto?> GetByIdAsync(Guid id, CancellationToken cancellationToken)

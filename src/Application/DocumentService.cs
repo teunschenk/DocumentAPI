@@ -54,7 +54,7 @@ public sealed class DocumentService
             new MutateDocumentCommand(document.Id),
             cancellationToken);
 
-        // Retrieve the document with approval by its ID and return it
+        // Retrieve the document with mutation by its ID and return it
         return await GetByIdAsync(document.Id, cancellationToken);
     }
 

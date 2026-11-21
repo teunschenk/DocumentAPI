@@ -45,9 +45,9 @@ public static class DocumentEndpoints
                 new UploadDocumentCommand(content),
                 cancellationToken);
 
-            return Results.Created($"/documents/{document.Id}", document);
+            return Results.Created($"/Document/{document.Id}", document);
         }
-        catch (ArgumentException exception)
+        catch (Exception exception)
         {
             return Results.BadRequest(new { error = exception.Message });
         }

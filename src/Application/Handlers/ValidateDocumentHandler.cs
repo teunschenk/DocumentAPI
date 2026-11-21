@@ -8,9 +8,7 @@ namespace DocumentAPI.Application.Handlers;
 /// </summary>
 /// <param name="documentRepository"></param>
 /// <param name="timeProvider"></param>
-public sealed class ValidateDocumentHandler(
-    IDocumentRepository documentRepository,
-    TimeProvider timeProvider)
+public sealed class ValidateDocumentHandler()
 {
     public async Task<bool> HandleAsync(
         ValidateDocumentCommand command,

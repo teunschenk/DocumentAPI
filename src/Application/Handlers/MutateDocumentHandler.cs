@@ -4,7 +4,7 @@ using DocumentAPI.Domain.Documents;
 namespace DocumentAPI.Application.Handlers;
 
 /// <summary>
-/// Update the document with an approval stamp
+/// Update the document with a mutation
 /// </summary>
 /// <param name="documentRepository"></param>
 /// <param name="timeProvider"></param>

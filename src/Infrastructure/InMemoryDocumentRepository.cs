@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace DocumentAPI.Infrastructure.Persistence;
 
+/// <summary>
+/// An in memory storage to temporarily store documents
+/// </summary>
 public sealed class InMemoryDocumentRepository : IDocumentRepository
 {
     private readonly ILogger<InMemoryDocumentRepository> _logger;

@@ -3,6 +3,11 @@ using DocumentAPI.Domain.Documents;
 
 namespace DocumentAPI.Application.Handlers;
 
+/// <summary>
+/// Update the document with an approval stamp
+/// </summary>
+/// <param name="documentRepository"></param>
+/// <param name="timeProvider"></param>
 public sealed class ApproveDocumentHandler(
     IDocumentRepository documentRepository,
     TimeProvider timeProvider)
@@ -17,6 +22,7 @@ public sealed class ApproveDocumentHandler(
             return false;
         }
 
+        // Add approval stamp to the document content at the end of the content
         document.AddContent(GetApprovalStamp());
 
         await documentRepository.SaveAsync(document, cancellationToken);

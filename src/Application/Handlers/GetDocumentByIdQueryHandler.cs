@@ -4,6 +4,10 @@ using DocumentAPI.Domain.Documents;
 
 namespace DocumentAPI.Application.Handlers;
 
+/// <summary>
+/// Retieve the document from the in memory storage.
+/// </summary>
+/// <param name="documentRepository"></param>
 public sealed class GetDocumentByIdQueryHandler(IDocumentRepository documentRepository)
 {
     public async Task<DocumentDto?> HandleAsync(

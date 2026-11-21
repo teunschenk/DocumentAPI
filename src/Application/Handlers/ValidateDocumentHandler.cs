@@ -3,6 +3,11 @@ using DocumentAPI.Domain.Documents;
 
 namespace DocumentAPI.Application.Handlers;
 
+/// <summary>
+/// Validate the document to see if it's really a text file. 
+/// </summary>
+/// <param name="documentRepository"></param>
+/// <param name="timeProvider"></param>
 public sealed class ValidateDocumentHandler(
     IDocumentRepository documentRepository,
     TimeProvider timeProvider)
